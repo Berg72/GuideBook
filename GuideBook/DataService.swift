@@ -92,4 +92,31 @@ On the bottom floor is an exhibit room showing the history and science of animat
         
     }
     
+    func getFileData() -> [City] {
+        
+       if let url = Bundle.main.url(forResource: "DemoData", withExtension: "json") {
+            
+           do {
+               let data = try Data(contentsOf: url)
+               
+               let decoder = JSONDecoder()
+               
+               do {
+                   let cities = try decoder.decode([City].self, from: data)
+                   return cities
+               }
+               catch {
+                   print("couldn't parse the JSON: \(error)")
+               }
+               
+           }
+           catch {
+               print("Couldn't read file: \(error)")
+           }
+           
+           
+        }
+        return [City]()
+    }
+    
 }
